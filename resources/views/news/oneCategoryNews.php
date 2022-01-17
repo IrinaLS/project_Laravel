@@ -14,6 +14,7 @@
 	  <h3>Категория новостей: <?=$newsItem['category']?></h3>
     <p><?=$newsItem['description']?></p>
 	  <em>Автор: <?=$newsItem['author']?></em>
+    <a href="index.php">Назад</a>
 	  <hr>
       <?endif;?>
 
