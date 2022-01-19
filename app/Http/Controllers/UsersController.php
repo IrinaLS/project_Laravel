@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class UsersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +13,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return view('admin.categories.index');
+        return view ('users.users',[]);
     }
 
     /**
@@ -24,7 +23,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.categories.create');
+        //
     }
 
     /**
@@ -36,9 +35,11 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-			'title' => ['required', 'string', 'min:5']
+			'firstName' => ['required', 'string', 'min:1']
 		]);
-        return response()->json($request->all());
+        $data=json_encode($request->all());
+        file_put_contents(public_path('user/data.json'), $data);
+        return response()->json($request->only('firstName','lastName','description'));
     }
 
     /**

@@ -17,4 +17,6 @@
 <x-alert type="success" message="Успешно добавлена новость"> </x-alert>
 <x-alert type="warning" message="Предупреждение"> </x-alert>
 <x-alert type="danger" message="Ошибка"> </x-alert>
+<div class="table-responsive">
+</div>
 @endsection

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\UsersController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 
@@ -19,7 +20,9 @@ use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 */
 
 Route::get ('/', [AboutController::class, 'about']);
-Route::get ('/about', [AboutController::class, 'about']);
+
+Route::get ('/users', [UsersController::class, 'index'])->name('users.index');
+Route::resource('/users', UsersController::class);
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
 	Route::view('/', 'admin.index')->name('index');
@@ -27,16 +30,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
 	Route::resource('/news', AdminNewsController::class);
 });
 
-Route::get ('/news', [NewsController::class, 'index'])
-    ->name('news.index');
-
-Route::get('/news/{id}/{description}/{title}/{author}', [NewsController::class, 'show'])
-	->where('id', '\d+')
-	->name('news.show');
-
-Route::get ('/category', [CategoryController::class, 'category'])
-	 ->name('news.category');
-
-Route::get('/news/{category}', [NewsController::class, 'oneCategoryNews'])
-	->name('news.oneCategoryNews');
-	
+Route::group(['prefix' => 'news', 'as' => 'news.'], function() {
+	Route::get ('/about', [AboutController::class, 'about'])->name('about');
+	Route::get ('/news', [NewsController::class, 'index'])->name('index');	
+	Route::get('/news/{id}/{description}/{title}/{author}', [NewsController::class, 'show'])->name('show');
+	Route::get ('/category', [CategoryController::class, 'category'])->name('category');	
+	Route::get('/news/{category}', [NewsController::class, 'oneCategoryNews'])->name('oneCategoryNews');
+});	
