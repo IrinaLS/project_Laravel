@@ -14,9 +14,39 @@
 @endsection
 
 @section ('content')
-<x-alert type="success" message="Успешно добавлена новость"> </x-alert>
+
+<div class="table-responsive">
+<table class="table table-bordered">
+            <thead>
+               <tr>
+                   <th>#ID</th>
+                   <th>Заголовок</th>
+                   <th>Статус</th>
+                   <th>Автор</th>
+                   <th>Описание</th>
+                   <th>Опции</th>
+               </tr>
+            </thead>
+            <tbody>
+              @forelse($newsList as $news)
+                  <tr>
+                      <td>{{ $news->id }}</td>
+                      <td>{{ $news->title }}</td>
+                      <td>{{ $news->status }}</td>
+                      <td>{{ $news->author }}</td>
+                      <td>{{ $news->description }}</td>
+                      <td>
+                          <a href="{{ route('admin.news.edit', ['news' => $news->id]) }}">Ред.</a> &nbsp;
+                          <a href="javascript:;" style="color:red;">Уд.</a>
+                      </td>
+                  </tr>
+              @empty
+                  <tr><td colspan="6">Записей нет</td> </tr>
+              @endforelse
+            </tbody>
+        </table>
+        <x-alert type="success" message="Успешно добавлена новость"> </x-alert>
 <x-alert type="warning" message="Предупреждение"> </x-alert>
 <x-alert type="danger" message="Ошибка"> </x-alert>
-<div class="table-responsive">
 </div>
 @endsection

@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    static public $categories = ['Политика', 'Спорт', 'Культура','Наука', 'Экономика'];
     public function category()
     {
-        return view ('news.category',[
-            'category' => self::$categories
-        ]);
+    
+        $model = new Category();
+		$categories = $model->getCategories();
+        
+        return view('news.category', [
+			'categoriesList' => $categories
+		]);
        		
     }
 }

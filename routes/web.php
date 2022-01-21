@@ -33,7 +33,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
 Route::group(['prefix' => 'news', 'as' => 'news.'], function() {
 	Route::get ('/about', [AboutController::class, 'about'])->name('about');
 	Route::get ('/news', [NewsController::class, 'index'])->name('index');	
-	Route::get('/news/{id}/{description}/{title}/{author}', [NewsController::class, 'show'])->name('show');
+	Route::get('/news/{id}', [NewsController::class, 'show'])->name('show');
 	Route::get ('/category', [CategoryController::class, 'category'])->name('category');	
-	Route::get('/news/{category}', [NewsController::class, 'oneCategoryNews'])->name('oneCategoryNews');
+	Route::get('/category/{id}', [NewsController::class, 'oneCategoryNews'])->name('oneCategoryNews');
 });	

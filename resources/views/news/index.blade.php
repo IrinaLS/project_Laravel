@@ -26,28 +26,19 @@
 				<div class="card-body">
 					<div class="card-header">
 						<strong>
-            <a href="{{route('news.show', [
-                        'id' => $newsItem['id'],
-                        'description' => $newsItem['description'],
-                        'title' => $newsItem['title'],
-                        'author' => $newsItem['author']       
-                    ])}}">
-                    {{$newsItem['title']}}
+            <a href="{{route('news.show', ['id' => $newsItem->id])
+                    }}">
+                    {{$newsItem->title}}
             </a>
 						</strong>
 					</div>
-					<p class="card-text">{!! $newsItem['description'] !!}</p>
-          <p class="card-text">Категория: {{$newsItem['category']}}</p>
-				  	<div>Автор: {{ $newsItem['author'] }}              
+					<p class="card-text">{!! $newsItem->description!!}</p>
+          
+				  	<div>Автор: {{ $newsItem->author }}              
             </div>
 				    	<div class="d-flex justify-content-between align-items-center">
 					    	<div class="btn-group">
-                <a href="{{route('news.show', [
-                        'id' => $newsItem['id'],
-                        'description' => $newsItem['description'],
-                        'title' => $newsItem['title'],
-                        'author' => $newsItem['author']       
-                    ])}}"  type="button" class="btn btn-sm btn-outline-secondary">Смотреть подробнее</a>
+                <a href="{{route('news.show', ['id' => $newsItem->id])}}"  type="button" class="btn btn-sm btn-outline-secondary">Смотреть подробнее</a>
                 </div>
     						<small class="text-muted">{{ now('Europe/Moscow') }}</small>
 		    			</div>
