@@ -26,7 +26,7 @@
 				<div class="card-body">
 					<div class="card-header">
 						<strong>
-            <a href="{{route('news.show', ['id' => $newsItem->id])
+            <a href="{{route('news.show', ['id' => $newsItem->id]) 
                     }}">
                     {{$newsItem->title}}
             </a>
@@ -49,5 +49,7 @@
       @empty 
         <h1>Новостей нет</h1>
       @endforelse
+	  
+	  {{ $news->links() }}
     </div>
 @endsection

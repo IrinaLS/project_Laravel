@@ -13,13 +13,9 @@
 @endsection
 
 @section('content')
-@if($errors->any())
-        @foreach($errors->all() as $error)
-            <x-alert type="danger" :message="$error"></x-alert>
-        @endforeach
-    @endif
+@include ('inc.message')
     <div>
-        <form method="post" action="{{ route('admin.categories.store', ['q' => 1]) }}">
+        <form method="post" action="{{ route('admin.categories.store')}}">
         @csrf
             <div class="form-group">
                 <label for="title">Наименование категории</label>

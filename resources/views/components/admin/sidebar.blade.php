@@ -19,7 +19,12 @@
               Категории
             </a>
           </li>
-       
+          <li class="nav-item">
+            <a class="nav-link  @if(request()->routeIs('admin.categories.*')) active @endif" href="{{ route ('news.index') }}">
+              <span data-feather="file"></span>
+              На основную сраницу
+            </a>
+          </li>
         </ul>
 
          </div>

@@ -13,21 +13,28 @@ class NewsController extends Controller
     
     public function index()
     {
-        $model = new News();
-		$news = $model->getNews();
-        
+        $news = News::query()->select(News::$availableFields)->paginate(6);
+               
+                
         return view('news.index', [
 			'news' => $news
 		]);
+        
     }
+    /*public function show(News $news)
+	{
+        
+        return view('news.show', [
+			'news' => $news
+		]);	
+	
+	}*/
     
     public function show(int $id)
 	{
-        $model = new News();
-		$news = $model->getNewsById($id);
-
-		return view('news.show', [
-			'newsItem' => $news
+        $news= News::findOrFail($id);
+        return view('news.show', [
+			'news' => $news
 		]);	
 	
 	}

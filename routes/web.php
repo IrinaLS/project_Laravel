@@ -33,7 +33,17 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
 Route::group(['prefix' => 'news', 'as' => 'news.'], function() {
 	Route::get ('/about', [AboutController::class, 'about'])->name('about');
 	Route::get ('/news', [NewsController::class, 'index'])->name('index');	
-	Route::get('/news/{id}', [NewsController::class, 'show'])->name('show');
+	Route::get('/news/{id}', [NewsController::class, 'show'])
+	->where ('news', '\d+') //имя модели
+	->name('show');
 	Route::get ('/category', [CategoryController::class, 'category'])->name('category');	
 	Route::get('/category/{id}', [NewsController::class, 'oneCategoryNews'])->name('oneCategoryNews');
 });	
+/*
+Route::get('/collection', function() {
+	$array = ['Anna', 'Victor', 'Alexey', 'dima', 'ira', 'Vasya', 'olya'];
+	$collection = collect($array);
+	dd($collection->map(function ($item) {
+		return mb_strtoupper($item);
+	})->sortKeys());
+});*/

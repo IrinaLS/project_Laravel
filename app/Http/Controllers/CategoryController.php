@@ -10,8 +10,7 @@ class CategoryController extends Controller
     public function category()
     {
     
-        $model = new Category();
-		$categories = $model->getCategories();
+        $categories = Category::query()->select(Category::$availableFields)->paginate(6);
         
         return view('news.category', [
 			'categoriesList' => $categories

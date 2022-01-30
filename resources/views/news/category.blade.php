@@ -34,6 +34,7 @@
 @empty 
 <h1>Категорий нет</h1>
 @endforelse
+{{ $categoriesList->links() }}
 </div>
 @endsection
 
