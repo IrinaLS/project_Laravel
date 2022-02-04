@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Category;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Categories\CreateRequest;
+use App\Http\Requests\Categories\EditRequest;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -15,7 +17,6 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //$categories = Category::query()->select(Category::$availableFields)->paginate(6);
         $categories = Category::with('news')->paginate(6);
                 
         return view('admin.categories.index', [
@@ -36,18 +37,21 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  CreateRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateRequest $request)
     {
-        $request->validate([
+      /*  $request->validate([
 			'title' => ['required', 'string', 'min:5']
 		]);
-        //return response()->json($request->all());
+        
         $created = Category::create(       
             $request->only(['title', 'description'])
-        );
+        );*/
+        $created = Category::create(       
+            $request->validated()
+            );
 
         if($created) {
 			return redirect()->route('admin.categories.index')
@@ -64,7 +68,7 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id)
     {
         //
     }
@@ -85,26 +89,25 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  EditRequest  $request
      * @param  Category $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(EditRequest $request, Category $category)
     {
-        $updated = $category->fill( $request->only(['title','description']) 
-               )->save();
+      /*  $updated = $category->fill( $request->only(['title','description']) 
+               )->save();*/
     
+        $updated = $category->fill( $request->validated())->save();
+        if($updated) {
+            return redirect()->route('admin.categories.index')
+                ->with('success', 'Запись успешно обновлена');
+        }
 
-    if($updated) {
-        return redirect()->route('admin.categories.index')
-            ->with('success', 'Запись успешно обновлена');
-    }
-
-    return back()->with('error', 'Не удалось обновить запись')
-        ->withInput();
+        return back()->with('error', 'Не удалось обновить запись')
+            ->withInput();
     }
     
-
     /**
      * Remove the specified resource from storage.
      *
@@ -113,6 +116,11 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        try{
+			$category->delete();
+			return response()->json('ok');
+		}catch(\Exception $e) {
+			\Log::error("Error delete category item");
+		}
     }
 }

@@ -34,9 +34,5 @@ class News extends Model
 	}
 	protected $casts = [    //CASTS
 		'display' => 'boolean'
-	];
-	
-	
-	
-	*/
+	];	*/
 }

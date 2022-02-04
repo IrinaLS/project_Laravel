@@ -20,6 +20,7 @@
             <div class="form-group">
                 <label for="title">Наименование категории</label>
                 <input type="text" class="form-control" value="{{ old('title') }}" id="title" name="title" required>
+                @error('title') <strong style="color:red;">{{ $message }}</strong> @enderror
             </div>
             <div class="form-group">
                 <label for="description">Описание категории</label>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>@section('title') -  @show</title>
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <style>
@@ -35,16 +35,15 @@
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         @yield ('header')
       </div>
-      
-    
-      @yield ('content')        
-    
+        @yield ('content')        
     </main>
   </div>
 </div>
 <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
 <script src="{{ asset('js/dashboard.js') }}"></script>
+
+@stack('js')
 
 </body>
 </html>

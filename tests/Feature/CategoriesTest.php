@@ -2,24 +2,21 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Models\Category;
 
 class CategoriesTest extends TestCase
 {
+	use RefreshDatabase;
     /**
      * A basic feature test example.
      *
      * @return void
      */
-    public function testCategotiesAvailable()
-    {
-        $response = $this->get('/news/category');
-
-        $response->assertStatus(200);
-    }
-
+    
 	public function testCategotiesShow()
 	{
 		$response = $this->get(route('news.category'));
@@ -43,13 +40,8 @@ class CategoriesTest extends TestCase
 
 	public function testCategotiesAdminCreated()
 	{
-		$responseData = [
-			'title' => 'Some title',			
-			'description' => 'Some text'
-		];
+		$responseData = Category::factory()->definition();
 		$response = $this->post(route('admin.categories.store'), $responseData);
-
-		$response->assertJson($responseData);
-		$response->assertStatus(200);
+		$response->assertStatus(302);
 	}
 }
