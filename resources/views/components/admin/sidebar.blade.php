@@ -25,6 +25,12 @@
               На основную сраницу
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link  @if(request()->routeIs('admin.updateProfile.*')) active @endif" href="{{ route ('admin.updateProfile') }}">
+              <span data-feather="file"></span>
+              Изменение профиля посетителя
+            </a>
+          </li>
         </ul>
 
          </div>

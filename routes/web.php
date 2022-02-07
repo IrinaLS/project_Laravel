@@ -5,6 +5,8 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Account\IndexController as AccountController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 
@@ -19,23 +21,37 @@ use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 |
 */
 
-Route::get ('/', [AboutController::class, 'about']);
+Route::get('/', function () {
+    return view('welcome');
+});
 
 Route::get ('/users', [UsersController::class, 'index'])->name('users.index');
 Route::resource('/users', UsersController::class);
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
-	Route::view('/', 'admin.index')->name('index');
-	Route::resource('/categories', AdminCategoryController::class);
-	Route::resource('/news', AdminNewsController::class);
+
+Route::group(['middleware' => 'auth'], function() {
+
+	Route::get('/account', AccountController::class)->name('account');
+  
+	Route::get('/account/logout', function() {
+			\Auth::logout();
+			return redirect()->route('login');
+			})->name('account.logout');
+
+	Route::group(['prefix' => 'admin', 'as' => 'admin.','middleware' => 'admin'], function() {
+			Route::view('/', 'admin.index')->name('index');
+			Route::resource('/categories', AdminCategoryController::class);
+			Route::resource('/news', AdminNewsController::class);
+			Route::match(['post','get'],'/profile', [ProfileController::class, 'update'])->name ('updateProfile');		
+	});
 });
 
 Route::group(['prefix' => 'news', 'as' => 'news.'], function() {
 	Route::get ('/about', [AboutController::class, 'about'])->name('about');
 	Route::get ('/news', [NewsController::class, 'index'])->name('index');	
 	Route::get('/news/{id}', [NewsController::class, 'show'])
-	->where ('news', '\d+') //имя модели
-	->name('show');
+			->where ('news', '\d+') //имя модели
+			->name('show');
 	Route::get ('/category', [CategoryController::class, 'category'])->name('category');	
 	Route::get('/category/{id}', [NewsController::class, 'oneCategoryNews'])->name('oneCategoryNews');
 });	
@@ -47,3 +63,10 @@ Route::get('/collection', function() {
 		return mb_strtoupper($item);
 	})->sortKeys());
 });*/
+Route::get ('/session', function (){
+	session(['title'=>'name']);
+	dd(session()->all());
+});
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

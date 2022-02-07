@@ -25,12 +25,7 @@
               Написать нам
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link @if(request()->routeIs('news.users')) active @endif"  href="{{ route ('admin.news.index') }}">
-              <span data-feather="file"></span>
-              АДМИНКА
-            </a>
-          </li>
+          
         </ul>
 
          </div>
