@@ -26,6 +26,12 @@
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link  @if(request()->routeIs('admin.parser.*')) active @endif" href="{{ route ('admin.parser') }}">
+              <span data-feather="file"></span>
+              Парсер
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link  @if(request()->routeIs('admin.updateProfile.*')) active @endif" href="{{ route ('admin.updateProfile') }}">
               <span data-feather="file"></span>
               Изменение профиля посетителя

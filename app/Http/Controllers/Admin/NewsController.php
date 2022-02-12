@@ -62,6 +62,7 @@ class NewsController extends Controller
 			->withInput();
     }
 
+  
     /**
      * Display the specified resource.
      *

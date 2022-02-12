@@ -41,8 +41,6 @@ class LoginController extends Controller
     }
     protected function authenticated(Request $request, $user)
 	{
-        // event(new UserLoginEvent($user));
-        $user->last_login_at = now();
-        $user->save();
+        event(new UserLoginEvent($user));    
 	}
 }
